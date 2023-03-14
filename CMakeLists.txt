@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.23)
+project(cs_assignments_s2)
+
+set(CMAKE_CXX_STANDARD 23)
+
+add_executable(cs_assignments_s2 inclass1.cpp)
