@@ -4,7 +4,7 @@
 using namespace std;
 
 class fraction{
-    public:
+public:
     int numerator;
     int denominator;
     fraction(int n, int d){
