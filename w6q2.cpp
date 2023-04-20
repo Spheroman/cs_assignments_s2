@@ -577,22 +577,3 @@ private :
     Gate *component[3] ;
     bool select;
 } ;
-
-
-int main()
-{
-    Mux4_1 m41(true);
-    bool n, m;
-    cin >> n >> m;
-    m41.setData(false, 0);
-    m41.setData(true, 1);
-    m41.setData(true, 2);
-    m41.setData(false, 3);
-    m41.setSelect(n, 1);
-    m41.setSelect(m, 0);
-    if (m41.output()->output())
-        cout << "1";
-    else
-        cout << "0";
-    return 0;
-}
