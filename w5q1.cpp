@@ -36,7 +36,8 @@ int main() {
         unsigned int v;
         cin >> v;
         number num = v;
-        cout << num.palindrome_steps() << " " << num.value << endl;
+        int temp = num.palindrome_steps();
+        cout << temp << " " << num.value << endl;
     }
     return 0;
 }
