@@ -4,47 +4,93 @@
 
 using namespace std;
 
-int* getPrimes(int n){
-    int* primes = new int[n + 1];
-    primes[0] = 1;
-    primes[1] = 2;
-    int i = 2;
-    for (int j = 3; j <= n; j++){
-        bool isPrime = true;
-        for (int k = 1; k < i; k++){
-            if (j % primes[k] == 0){
-                isPrime = false;
-                break;
+class building{
+public:
+    int x1, x2, h;
+    building* next = nullptr;
+
+    building(int a, int b, int c){
+        x1 = a;
+        x2 = c;
+        h = b;
+    }
+
+    void add(building* b){
+        if(b->x1 > x2){
+            next = new building(x2, 0, b->x1);
+            next->next = b;
+            return;
+        }
+        if(b->h > h){
+            if(b->x2 < x2){
+                b->next = new building(b->x2, h, x2);
+                x2 = b->x1;
             }
         }
-        if (isPrime)
-            primes[i++] = j;
+        else if(b->h < h){
+            b->x1 = x2;
+            if(b->x2 < x2){
+                if (b->next != nullptr)
+                    this->add(b->next);
+                return;
+            }
+        }
+        if (this->find(b->x2) != nullptr && this->find(b->x2) != this){
+            b->add(this->find(b->x2));
+        }
+        next = b;
     }
-    primes[n] = i;
-    return primes;
-}
+
+    building* last(){
+        if(next == nullptr)
+            return this;
+        return next->last();
+    }
+
+    building* find(int x){
+        if(x < x1)
+            return nullptr;
+        if(x > x2 && next != nullptr)
+            return next->find(x);
+        if(next != nullptr && next->find(x) != nullptr)
+            return next->find(x);
+        return this;
+    }
+
+    void print(){
+        cout << x1 << " " << h << " ";
+        if(next != nullptr)
+            next->print();
+    }
+
+};
+
+class skyline{
+public:
+    building* head;
+    skyline(){
+        head = nullptr;
+    }
+
+    void add(int a, int b, int c){
+        building* bld = new building(a, b, c);
+        if(head == nullptr){
+            head = bld;
+            return;
+        }
+        building* cur = head->find(a);
+        cur->add(bld);
+    }
+};
+
 
 int main(){
-    int a, b;
-    while (cin >> a >> b){
-        if(a < 0 || b < 0 || a > 1000 || b > a)
-            break;
-        int* primes = getPrimes(a);
-        int numprimes = primes[a];
-        int min = 0, max = 0;
-        min = numprimes / 2 - b + numprimes % 2;
-        max = numprimes / 2 + b;
-        if (min < 0)
-            min = 0;
-        if (max > numprimes)
-            max = numprimes;
-        cout << a << " " << b << ": ";
-        for (; min < max; min++){
-            cout << primes[min];
-            if (min != max - 1)
-                cout << " ";
-        }
-        cout << endl << endl;
+    skyline* sk = new skyline();
+    int a, b, c;
+    while(cin.peek() != EOF){
+        cin >> a >> b >> c;
+        sk->add(a, b, c);
     }
-
+    sk->add(a, 0, c + 1);
+    sk->head->print();
 }
