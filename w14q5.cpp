@@ -110,9 +110,13 @@ int main() {
         for(int i = 0; i < n && lines[i].valid; i++){
             if (i < n - 1 && lines[i].valid)
                 lines[i].cut(lines[i + 1].y1);
-            tot += lines[i].length();
+            if(lines[i].slope() != 0){
+                tot += lines[i].length();
+            }
         }
-        cout << tot;
+        if(!(tot > 0))
+            cout << "0.00";
+        else printf("%.2f", tot);
         if (c > 1)
             cout << endl;
     }

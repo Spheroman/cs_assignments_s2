@@ -10,14 +10,6 @@ int optimistic(int p, int add, int m){
     return (m >= med)? 1 + optimistic(p-1, med, m) : optimistic(p-1 , add, m);
 }
 
-int pessimistic2(int p, int add, int m){
-    if (p == 0)
-        return 0;
-    int med = (1 << (p - 1)) + add;
-    cout << med << endl;
-    return (m >= med)? pessimistic2(p-1, med, m) : 1 + pessimistic2(p-1 , add, m);
-}
-
 int pessimistic(int n, int m) {
     if (m == 0)
         return 1;
@@ -39,6 +31,6 @@ int main() {
         int n, m;
         cin >> n >> m;
         if (n > 31) return -1;
-        cout << optimistic(n, 0, m) << " " << () << endl;
+        cout << optimistic(n, 0, m) << " " << pessimistic(n, m) << endl;
     }
 }

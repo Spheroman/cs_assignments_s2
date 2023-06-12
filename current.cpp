@@ -116,7 +116,7 @@ int main() {
         }
         if(!(tot > 0))
             cout << "0.00";
-        else cout << tot;
+        else printf("%.2f", tot);
         if (c > 1)
             cout << endl;
     }
