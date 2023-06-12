@@ -73,7 +73,7 @@ public:
         this->n = 3;
         this->segments = segments;
     }
-    float area() override{
+    float area() {
         float a = this->segments[0].getLength();
         float b = this->segments[1].getLength();
         float c = this->segments[2].getLength();
